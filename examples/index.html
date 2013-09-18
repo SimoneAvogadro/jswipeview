@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link   href="//alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css" />
+<link   href="//alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+<script src="//alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
+<script src="//alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js" type="text/javascript"></script>
+<script src="//alexgorbatchev.com/pub/sh/current/scripts/shBrushXml.js" type="text/javascript"></script>
+</head>
+<body>
+<h1>1. Features</h1>
+This is a wrapper on top of <a href="http://cubiq.org/swipeview" target="_blank">Matteo Spinelli's SwipeView</a>. <br>
+Designed to provide:<ul>
+<li>jQuery interface on top of <a href="http://cubiq.org/swipeview" target="_blank">SwipeView</a>
+<li>An easily configurable gallery of HTML pages which are loaded using AJAX
+<li>Wide borwser functionality and compatibility (IE8+,FF,Chrome etc...)
+<li>Container element will be resized to match the height of the content
+<li>API for customization
+</ul>
+
+<h1>2. How To</h1>
+
+<h2>2.1. Define a swipable view</h2>
+Just use the .swipeview on the object you want ot be able to swipe (see <a href="ex1.html">sample 1 sources</a>).<br>
+This means you just define an HTML:<br>
+<pre class="brush: xml">
+&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;link   href="swipeview.css" rel="stylesheet" type="text/css" /&gt;
+&lt;script src ="swipeview.js"   type="text/javascript" &gt;&lt;/script&gt;
+&lt;script src ="jswipeview.js"  type="text/javascript" &gt;&lt;/script&gt;
+
+&lt;ul id="swipeview-nav"&gt;&lt;/ul&gt;
+&lt;div id="swipeview"&gt;&lt;/div&gt;  
+</pre>
+and use an activating script:<br>
+<pre class="brush: js">
+	var slides = [
+  			'p1.html',
+  			'p2.html',
+  			'p3.html',
+  			'p4.html'
+  	];
+
+	$('#sampleDIV').swipeview({
+		'slides': slides  
+	});
+</pre>
+
+<h2>2.2. Define a navigation bar or prev/next buttons</h2>
+By default jSwipeView will create a navigation bar and prev/next by appending suffixes to the swipe DIV's ID:
+<ul>
+<li>-nav: will be used to find and 'ul' element and create a navigation bar inside it. It will contain
+    <ul>
+	     <li>a "prev" button
+	     <li>a direct jump pointer for each page
+	     <li>a "next" button
+	</ul>
+<li>-nav-next: will be used to creare a next-page link, appropriate events will be automatically added to it
+<li>-nav-prev: will be used to creare a next-page link, appropriate events will be automatically added to it
+</ul>
+
+Example:
+<table border="1"><tr><th>swipe element</th><th>swipe element's ID</th><th>nav bar id</th><th>next element id</th></tr>
+<tr><td>&lt;div id='here'/&gt;</td><td>here</td><td>here-nav</td><td>here-nev-next</td></tr>
+</table>
+
+<h2>2.3. API</h2>
+
+<h3>2.3.1. .next() and .prev()</h3>
+<pre class="brush: js">
+	var sample = $('#swipeDIV').swipeview({
+		'slides': slides  
+	});
+	
+	sample.next();  // animate slide to next element
+	sample.prev();  // animate slide to prev element
+</pre>
+
+<h3>2.3.2. .goToPage(num)</h3>
+<pre class="brush: js">
+	var sample = $('#swipeDIV').swipeview({
+		'slides': slides  
+	});
+	
+	sample.goToPage(7);  // jump directly to page 7
+</pre>
+
+<h2>2.4. Events</h2>
+<h3>2.4.1. swipeview-show</h3>
+This is the event that you will most probably want to listen to, it will notify you of: <ul>
+<li>address: of the page being loaded
+<li>title: is specified in the list of pages
+<li>index: the 0-based index of the slide currently being shown
+</ul>
+<pre class="brush: js" title="Sample for swipeview-show event:">
+	$('#gallery').bind('swipeview-show', function( event, address, titolo, indice ) {
+		console.log('show! '+this+' for title:'+ titolo+' for address:' + address);
+	});
+</pre>
+
+<h3>2.4.2. swipeview-load</h3>
+This event can be used for fine-tuning purposes, once a page has been loaded in background (eg.: at the beginning or when cycling thru the pages) will raise an event with:<ul>
+<li>address: of the page being loaded
+<li>title: is specified in the list of pages
+<li>index: the 0-based index of the slide currently being shown
+</ul>
+<pre class="brush: js" title="Sample for swipeview-show event:">
+	$('#gallery').bind('swipeview-load', function( event, address, titolo, indice ) {
+		console.log('load! '+this+' for title:'+ titolo+' for address:' + address);
+	});
+</pre>
+
+
+<h1>3. Samples</h1>
+<h2><a href="ex1.html">Sample 1: minimal</a></h2>
+<ul>
+<li>1 div for the swipe container  ('#swipeview')</li>
+<li>1 div to hold the navigation, which is autodetected using naming convention ('{main}-nav', so if '#swipeview-nav' is present it's used to hold the navigation)</li>
+<li>1 javascript array for the list fo pages</li>
+</ul>
+
+<h2><a href="ex2.html">Sample 2: custom navigation and titles</a></h2>
+<ul>
+<li>Slides have an URL + a title</li>
+<li>The window title is the same of the slide title</li>
+<li>Custom title object appears on top of the content</li>
+<li>Custom navigation controlled via naming convention ('{main}-nav-next' , so if '#swipeview-nav-next' is present it will navigate to next page) </li>
+</ul>
+
+<h2><a href="ex3.html">Sample 3: custom events and HTML 5 history</a></h2>
+<ul>
+<li>The swipe view generates events when the pages are loaded and when they are shown (which is different!)</li>
+<li>This sample listens to 'swipeview-show' event and changes the window URL using HTML 5 history API</li>
+<li>Custom prev/next objects are built using the jswipeview API</li>
+</ul>
+
+
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>
+
+</body>
+</html>

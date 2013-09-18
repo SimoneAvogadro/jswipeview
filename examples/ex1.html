@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head><title>Sample 1: minimal</title></head>
+<body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link   href="../swipeview.css" rel="stylesheet" type="text/css" />
+<script src ="../swipeview.js"   type="text/javascript" ></script>
+<script src ="../jswipeview.js"  type="text/javascript" ></script>
+
+<ul id="swipeview-nav"></ul><!-- this element will be populated with navigation links -->
+<div id="swipeview"></div>  <!-- this element will be populated with the swipeview -->
+
+<script type="text/javascript">
+	var slides = [
+  			'p1.html',
+  			'p2.html',
+  			'p3.html',
+  			'p4.html'
+  	];
+
+	$('#swipeview').swipeview({
+		'slides': slides  
+	});
+</script>
+
+</body>
+</html>

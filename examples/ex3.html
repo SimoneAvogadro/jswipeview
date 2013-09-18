@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link   href="../swipeview.css" rel="stylesheet" type="text/css" />
+<script src ="../swipeview.js"   type="text/javascript" ></script>
+<script src ="../jswipeview.js"  type="text/javascript" ></script>
+
+<!-- custom title colors -->
+<style>
+#swipeview-slider .swipeview-title {
+	background-color: #037188;
+	color: white;
+}
+</style>
+
+
+<div id="vieni-avanti"  >=== next --&gt; === </div><!-- this DIV is linked to navigation using javascript (see below) using jswipeview events -->
+<div id="torna-indietro">=== &lt;-- prev === </div><!-- this DIV is linked to navigation using javascript (see below) using jswipeview events -->
+
+<div id="galleria"></div>  <!-- this DIV will host the swipeview -->
+
+<script type="text/javascript">
+	// elenco delle slide da mostrare
+	var slides = [
+	  			{
+					address : 'p1.html',
+					title : 'Change Management'
+				},{
+					address : 'p2.html',
+					title : 'Chi siamo'
+				},{
+					address : 'p3.html',
+					title : 'ICT: Pensiero ed Azione'
+				},{
+					address : 'p4.html',
+					title : 'Cloud computing'
+				}
+	];
+
+	// create swipeview on "galleria" DIV
+	var $swipe = $('#galleria').swipeview({
+		'slides': slides  
+	});
+	
+	// listen to swipeview browsing events
+	$('#galleria').bind('swipeview-load', function( event, address, titolo, indice ) {
+		console.log('load! on: ' + event.target + ' to address:' + address);
+	});
+	$('#galleria').bind('swipeview-show', function( event, address, titolo, indice ) {
+		console.log('show! '+this+' for title:'+ titolo+' for address:' + address);
+		window.history.pushState({'swipeIndex': indice}, titolo, address);
+	});
+	
+	// create custom 'buttons' using swipeview methods
+	$('#vieni-avanti').click(function( event ) {
+		$swipe.next();
+	});
+	$('#torna-indietro').click(function( event ) {
+		$swipe.prev();
+	});
+
+	// disable default browser swipe behaviour
+	if (typeof document.addEventListener != 'undefined') {
+		document.addEventListener('touchmove', function (e) { 
+			e.preventDefault();
+		}, false);
+	}
+</script>
+
+
+
+
+</body>
+</html>
