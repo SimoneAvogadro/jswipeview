@@ -9,5 +9,5 @@ JQuery wrapper for the excellent SwipeView plugin from http://cubiq.org/
  * Container element will be resized to match the height of the content
  * API for customization
 
-See mini manual and examples here: http://s3-eu-west-1.amazonaws.com/jswipeview/index.html
+
  
